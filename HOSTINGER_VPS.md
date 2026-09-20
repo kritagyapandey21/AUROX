@@ -4,6 +4,7 @@ This deployment serves the frontend and FastAPI backend from one domain:
 
 - Website: `https://YOUR_DOMAIN`
 - API: `https://YOUR_DOMAIN/api`
+- Internal backend port: `127.0.0.1:8001` (dedicated to AUROX)
 
 ## 1. Install server packages
 
@@ -49,7 +50,7 @@ sudo cp /var/www/aurox/deploy/aurox-backend.service /etc/systemd/system/aurox-ba
 sudo systemctl daemon-reload
 sudo systemctl enable --now aurox-backend
 sudo systemctl status aurox-backend
-curl http://127.0.0.1:8000/health
+curl http://127.0.0.1:8001/health
 ```
 
 ## 5. Configure Nginx
