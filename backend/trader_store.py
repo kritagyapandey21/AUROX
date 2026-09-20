@@ -1,11 +1,15 @@
 """Small persistent store for Trader ID display preferences."""
 
 import sqlite3
+import os
 from pathlib import Path
 
 from timezone_utils import DEFAULT_TIMEZONE, normalize_timezone
 
-DB_PATH = Path(__file__).with_name("trader_preferences.sqlite3")
+DB_PATH = Path(os.environ.get(
+    "TRADER_DB_PATH",
+    str(Path(__file__).with_name("trader_preferences.sqlite3")),
+))
 
 
 def _connect() -> sqlite3.Connection:

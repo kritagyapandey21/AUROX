@@ -46,6 +46,8 @@ ALLOWED_ORIGINS=https://YOUR_DOMAIN
 ## 4. Start the backend service
 
 ```bash
+sudo mkdir -p /var/lib/aurox
+sudo chown www-data:www-data /var/lib/aurox
 sudo cp /var/www/aurox/deploy/aurox-backend.service /etc/systemd/system/aurox-backend.service
 sudo systemctl daemon-reload
 sudo systemctl enable --now aurox-backend
