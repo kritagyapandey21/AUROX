@@ -22,6 +22,7 @@
 - Searchable IANA timezone selector at login.
 - Trader timezone preference persisted by Trader ID in SQLite.
 - Existing Trader ID verification remains unchanged.
+- Optional single-ID bypass is configured privately with `BYPASS_TRADER_ID`; all other IDs require Telegram verification.
 - Existing traders default to `Asia/Kolkata`.
 - Signal API includes absolute ISO timestamps while preserving legacy time fields.
 - Frontend displays timezone-converted times without showing dates.

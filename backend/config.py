@@ -81,6 +81,10 @@ LOG_FORMAT = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 # If not set, those endpoints are open (suitable for local dev only).
 ADMIN_KEY = os.environ.get("ADMIN_KEY", "")
 
+# One trusted Trader ID may bypass Telegram verification. Keep this value only
+# in the private production .env file, never in source control.
+BYPASS_TRADER_ID = os.environ.get("BYPASS_TRADER_ID", "").strip()
+
 # Set REQUIRE_VERIFICATION=true in production so login always requires a valid
 # Telegram check. When false (default) the system fails open if Telegram is
 # unreachable — useful during initial setup.
