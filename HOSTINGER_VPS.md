@@ -2,7 +2,7 @@
 
 This deployment serves the frontend and FastAPI backend from one domain:
 
-- Website: `https://YOUR_DOMAIN`
+- Website: `https://YOUR_DOMAIN/pocketoption/`
 - API: `https://YOUR_DOMAIN/api`
 - Internal backend port: `127.0.0.1:8001` (dedicated to AUROX)
 
@@ -81,7 +81,7 @@ curl https://example.com/api/health
 curl https://example.com/api/server-time
 ```
 
-Open `https://example.com`. The frontend uses `/api`, so the browser never calls `localhost` or the old hosting API.
+Open `https://example.com/pocketoption/`. The domain root redirects there, and the frontend uses `/api`, so the browser never calls `localhost` or the old hosting API.
 
 ## Updating later
 
