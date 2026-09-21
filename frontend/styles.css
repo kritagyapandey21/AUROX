@@ -130,6 +130,22 @@ body {
 }
 @keyframes scanMove { to { transform: translateY(100vh); } }
 
+@media (max-width: 650px) {
+    #bgCanvas { display: none; }
+    .scanline::after,
+    .trend-lines path,
+    .glass-panel::before,
+    .panel-live i,
+    .live-dot { animation: none !important; }
+    .glass-panel,
+    .chart-wrap,
+    .network-wrap,
+    .ai-insight,
+    .login-card,
+    .market-panel { backdrop-filter: none; -webkit-backdrop-filter: none; }
+    .dashboard-backdrop { opacity: .55; }
+}
+
 /* ── App shell ─────────────────────────────── */
 .app {
     display: flex; /* JS overrides display:none initially */

@@ -44,9 +44,11 @@ const btnLoader       = $('btnLoader');
     const ctx    = canvas.getContext('2d');
     let W, H, particles;
 
-    const PARTICLE_COUNT = 70;
+    const isMobile = window.matchMedia('(max-width: 650px)').matches;
+    const PARTICLE_COUNT = isMobile ? 24 : 70;
     const MAX_DIST = 140;
     const SPEED    = 0.25;
+    let frame = 0;
 
     function resize() {
         W = canvas.width  = window.innerWidth;
@@ -69,6 +71,11 @@ const btnLoader       = $('btnLoader');
     }
 
     function draw() {
+        frame += 1;
+        if (document.hidden || (isMobile && frame % 2)) {
+            requestAnimationFrame(draw);
+            return;
+        }
         ctx.clearRect(0, 0, W, H);
 
         // Update positions
@@ -511,6 +518,8 @@ function initDashboardVisuals() {
     const networkCanvas = $('correlationNetwork');
     const networkContext = networkCanvas.getContext('2d');
     const chartTooltip = $('chartTooltip');
+    const isMobile = window.matchMedia('(max-width: 650px)').matches;
+    let lastNetworkFrame = 0;
     const chartValues = [68180, 68420, 68270, 68740, 68610, 68960, 69140, 68880, 69340, 69720, 69550, 69840, 70120, 69890, 70420, 70180, 70610, 70340, 70820, 70670, 71120, 70980, 71400, 71240];
     let networkNodes = [];
     let networkLinks = [];
@@ -555,6 +564,15 @@ function initDashboardVisuals() {
     }
 
     function drawNetwork(timestamp = 0) {
+        if (document.hidden) {
+            window.requestAnimationFrame(drawNetwork);
+            return;
+        }
+        if (isMobile && timestamp - lastNetworkFrame < 33) {
+            window.requestAnimationFrame(drawNetwork);
+            return;
+        }
+        lastNetworkFrame = timestamp;
         updateNetworkPairs();
         const bounds = fitCanvas(networkCanvas, networkContext); const width = bounds.width; const height = bounds.height; const drift = Math.sin(timestamp / 1700) * 2; networkContext.clearRect(0, 0, width, height);
         const points = networkNodes.map(node => ({ ...node, px: node.x * width + drift, py: node.y * height + Math.cos(timestamp / 1900 + node.x * 4) * 2 }));
@@ -758,6 +776,15 @@ function resetInactivityTimer() {
     inactivityTimer = setTimeout(doLogout, INACTIVITY_TIMEOUT);
 }
 
+let activityFrame = null;
+function scheduleActivityReset() {
+    if (activityFrame) return;
+    activityFrame = requestAnimationFrame(() => {
+        activityFrame = null;
+        resetInactivityTimer();
+    });
+}
+
 function doLogout() {
     clearTimeout(inactivityTimer);
     clearInterval(state.countdownInterval);
@@ -787,7 +814,7 @@ function doLogout() {
 
 function startInactivityWatcher() {
     ['mousemove','mousedown','keydown','scroll','touchstart','click'].forEach(evt =>
-        document.addEventListener(evt, resetInactivityTimer, { passive: true })
+        document.addEventListener(evt, scheduleActivityReset, { passive: true })
     );
     resetInactivityTimer();
 }
