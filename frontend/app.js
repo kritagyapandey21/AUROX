@@ -617,7 +617,6 @@ window.addEventListener('beforeunload', () => {
     clearInterval(state.timeSyncInterval);
     clearInterval(state.displayInterval);
     clearInterval(state.statsInterval);
-    sessionStorage.removeItem('aurox_trader_id');
 });
 
 // ── Online / offline ─────────────────────────────────────────────────
@@ -767,8 +766,8 @@ function initLogin() {
 
 }
 
-// ── Inactivity auto-logout (5 min) ───────────────────────────────────
-const INACTIVITY_TIMEOUT = 120 * 60 * 1000;
+// ── Inactivity auto-logout (30 min) ──────────────────────────────────
+const INACTIVITY_TIMEOUT = 30 * 60 * 1000;
 let inactivityTimer = null;
 
 function resetInactivityTimer() {
