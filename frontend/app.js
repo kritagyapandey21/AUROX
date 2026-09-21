@@ -761,7 +761,17 @@ function initLogin() {
         event.preventDefault();
         window.open(event.currentTarget.href, '_blank', 'noopener,noreferrer');
     });
-    loginInput.focus();
+
+    const storedTraderId = sessionStorage.getItem('aurox_trader_id');
+    if (storedTraderId) {
+        state.timezone = localStorage.getItem(`aurox_timezone_${storedTraderId.toUpperCase()}`) || state.timezone;
+        traderDisp.textContent = storedTraderId.toUpperCase();
+        loginScreen.style.display = 'none';
+        appScreen.style.display = 'flex';
+        bootApp();
+    } else {
+        loginInput.focus();
+    }
     loadTimezones();
 
 }
